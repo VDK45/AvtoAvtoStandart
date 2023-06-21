@@ -20,5 +20,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # http://127.0.0.1:8000/admin
-    path('avtoservice/', include('avto_tochka.urls')),
+    path('', include('avto_tochka.urls')),
 ]
+
+handler404 = pageNotFound  # DEBUG = False

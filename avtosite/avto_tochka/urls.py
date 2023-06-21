@@ -4,7 +4,9 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('', home),  # http://127.0.0.1:8000/avtoservice/
-    path('index/', index),  # http://127.0.0.1:8000/avtoservice/index/
-    path('services/', services),  # http://127.0.0.1:8000/avtoservice/services/
+    path('', home, name='main'),  # http://127.0.0.1:8000/
+    path('index/<int:indexid>/', index),  # http://127.0.0.1:8000/index/99
+    path('services/<slug:serviceslug>/', services),  # http://127.0.0.1:8000/services/razval
 ]
+
+
