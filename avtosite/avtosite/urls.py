@@ -14,13 +14,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from avto_tochka.views import *
 from django.urls import path, include
+
+from avtosite import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # http://127.0.0.1:8000/admin
     path('', include('avto_tochka.urls')),
 ]
+
+if settings.DEBUG:  # import from avtosite
+    # import from django.conf.urls.static.static()
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  
 
 handler404 = pageNotFound  # DEBUG = False
