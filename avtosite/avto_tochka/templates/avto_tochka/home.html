@@ -1,0 +1,18 @@
+{% extends 'avto_tochka/base.html' %}
+
+{% block content %}
+    <h1>{{title}}</h1>
+    <p>Главная страница</p>
+    <ul>
+	{% for p in posts %}
+	<li>
+		<h2>{{p.title}}</h2>
+		<p>{{p.content}}</p>
+		<hr>
+	</li>
+	{% endfor %}
+    </ul>
+
+
+
+{% endblock %}
