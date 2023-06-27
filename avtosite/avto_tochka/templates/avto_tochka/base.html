@@ -1,18 +1,69 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 	<title>{{title}}</title>
+	<link type="text/css" href="{% static 'avto_tochka/css/styles.css' %}" rel="stylesheet" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="shortcut icon" href="{% static 'avto_tochka/images/main.ico' %}" type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<table class="table-page" border=0 cellpadding="0" cellspacing="0">
+<tr><td valign=top>
 {% block mainmenu %}
-<ul>
-	{% for m in menu %}
-<li>{{m}}</li>
-	{% endfor %}
-</ul>
+		<div class="header">
+			<ul id="mainmenu" class="mainmenu">
+			<li class="logo"><a href="#"><div class="logo"></div></a></li>
+{% for m in menu %}
+	{% if not forloop.last %}
+			<li><a href="#">{{m.title}}</a></li>
+	{% else %}
+			<li class="last"><a href="#">{{m.title}}</a></li>
+	{% endif %}
+{% endfor %}
+			</ul>
+			<div class="clear"></div>
+		</div>
 {% endblock mainmenu %}
 
+
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+<tr>
+<!-- Sidebar слева -->
+	<td valign="top" class="left-chapters">
+	<ul id="leftchapters">
+		<li class="selected">Все категории</li>
+		<li><a href="#">Развал-схождение</a></li>
+		<li><a href="#">Ремон ходовой части</a></li>
+		<li><a href="#">Услуги пресса</a></li>
+		<li class="share">
+		<p>Наш канал</p>
+		<a class="share-yt" href="https://www.youtube.com/channel/UClJzWfGWuGJL2t-3dYKcHTA/playlists" target="_blank" rel="nofollow"></a>
+		</li>
+	</ul>
+</td>
+<!-- Конец Sidebar'а -->
+<td valign="top" class="content">
+	<!-- Хлебные крошки -->
+	{% block breadcrumbs %}
+	{% endblock %}
+
+<!-- Блок контента -->
+	<div class="content-text">
 {% block content %}
 {% endblock %}
+	</div>
+<!-- Конец блока контента -->
+
+</td></tr></table>
+</td></tr>
+<!-- Footer -->
+<tr><td valign=top>
+	<div id="footer">
+		<p>&copy; Наш адрес: Театральная 228 Ход с улицы прямо за остановкой </p>
+	</div>
+</td></tr></table>
+<!-- Конец footer'а и страницы -->
 </body>
 </html>
