@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Service(models.Model):
@@ -21,6 +22,9 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_id': self.pk})
 
 # in terminal: python manage.py makemigrations
 # Show sql command: python manage.py sqlmigrate avto_tochka 0001

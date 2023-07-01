@@ -11,7 +11,7 @@
 		<div class="clear"></div>
 		<h3>Цена от {{p.price}} рублей </h3>
 			
-		<p class="link-read-post"><a href="#">Читать далее</a></p>
+		<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать далее</a></p>
 		</li>
 	{% endfor %}
 </ul>
