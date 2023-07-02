@@ -19,6 +19,7 @@ class Service(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)  # (cat)_id автоматом добавится
 
     def __str__(self):
         return self.title
@@ -26,18 +27,31 @@ class Service(models.Model):
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_id': self.pk})
 
+
 # in terminal: python manage.py makemigrations
 # Show sql command: python manage.py sqlmigrate avto_tochka 0001
 # Create table: python manage.py migrate
 
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, db_index=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_id': self.pk})
+
+
 """
-    В терминале:
+    Запись в базу данных:
+    В терминале
     python manage.py shell / exit()
     from avto_tochka.models import Service 
     Service(title='Сход Развал', price=800, content="Для легковых")
     Получаем результат: <Service: Service object (None)>  (None) = id записи
     (models является линивыми)
-    s1 = _  (s1 = Service(title='Сход Развал', price=800, content="Для легковых"))
+    s1 = _  # (s1 = Service(title='Сход Развал', price=800, content="Для легковых"))
     s1.save()
     запись создана
     s1.id 
