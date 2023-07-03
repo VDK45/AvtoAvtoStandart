@@ -3,9 +3,9 @@ from django.urls import reverse
 
 
 class Service(models.Model):
-    title = models.CharField(max_length=255)
-    price = models.SmallIntegerField(default=0)
-    content = models.TextField(blank=False)  # Пустое = False
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    price = models.SmallIntegerField(default=0, verbose_name='Цена')
+    content = models.TextField(blank=False, verbose_name='Описание')  # Пустое = False
     # Нужно установить pillow
 
     # Нужно добавить в seting.py
@@ -15,17 +15,22 @@ class Service(models.Model):
     # Нужно добавить в avtosite\url.py
     # if settings.DEBUG:  # import from avtosite
     #     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    photo = models.ImageField(upload_to="photos/%Y/%m/%d/")  # Загрузить в "photos/%Y/%m/%d/"
-    time_create = models.DateTimeField(auto_now_add=True)
-    time_update = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(default=True)
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)  # (cat)_id автоматом добавится
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name='Фото')  # Загрузить в "photos/%Y/%m/%d/"
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    is_published = models.BooleanField(default=True, verbose_name='Обпуликовать')
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name='Категория')  # (cat)_id автоматом добавится
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_id': self.pk})
+
+    class Meta:
+        verbose_name = 'Услуги'
+        verbose_name_plural = 'Услуги'
+        ordering = ['time_create', 'title']
 
 
 # in terminal: python manage.py makemigrations
@@ -34,13 +39,17 @@ class Service(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
+    name = models.CharField(max_length=100, db_index=True, verbose_name='Категории услуг')
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_id': self.pk})
+
+    class Meta:
+        verbose_name = 'Категории услуг'
+        verbose_name_plural = 'Категории услуг'
 
 
 """
