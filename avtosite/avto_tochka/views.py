@@ -10,14 +10,14 @@ menu = [{'title': "О сайте", 'url_name': 'about'},
 
 
 def home(request):
-    posts = Service.objects.all()
-    cats = Category.objects.all()
+    # posts = Service.objects.all()
+    # cats = Category.objects.all()
 
     context = {
         'title': 'Главная страница',
         'menu': menu,
-        'posts': posts,
-        'cats': cats,
+        # 'posts': posts,
+        # 'cats': cats,
         'cat_selected': 0,
     }
     return render(request, 'avto_tochka/home.html', context=context)
@@ -66,17 +66,17 @@ def pageredirect(request, exception):
 
 
 def show_category(request, cat_id):
-    posts = Service.objects.filter(cat_id=cat_id)
-    cats = Category.objects.all()
+    # posts = Service.objects.filter(cat_id=cat_id)
+    # cats = Category.objects.all()
 
-    if len(posts) == 0:
-        raise Http404()
+    # if len(posts) == 0:
+    #     raise Http404()
 
     context = {
         'title': 'Отображение по сервисам',
         'menu': menu,
-        'posts': posts,
-        'cats': cats,
+        # 'posts': posts,
+        # 'cats': cats,
         'cat_selected': cat_id,
     }
     return render(request, 'avto_tochka/home.html', context=context)

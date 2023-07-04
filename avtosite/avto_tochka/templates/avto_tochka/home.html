@@ -1,27 +1,30 @@
 {% extends 'avto_tochka/base.html' %}
+{% load avto_tochka_tags %}
 
 {% block content %}
 <ul class="list-articles">
-	{% for p in posts %}
-		<li><div class="article-panel">
-		<p class="first">Категория: {{p.cat}}</p>
-		<p class="last">Обновлено: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
-		</div>
+    {% show_services cat_selected  %}
+<!--	{% for p in posts %}-->
+<!--		<li><div class="article-panel">-->
+<!--		<p class="first">Категория: {{p.cat}}</p>-->
+<!--		<p class="last">Обновлено: {{p.time_update|date:"d-m-Y H:i:s"}}</p>-->
+<!--		</div>-->
 
-		{% if p.photo %}
-			<p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
-		{% endif %}
+<!--		{% if p.photo %}-->
+<!--			<p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>-->
+<!--		{% endif %}-->
 
-		<li><h2>{{p.title}} </h2>
+<!--		<li><h2>{{p.title}} </h2>-->
 
-		{% autoescape off %}
-		{{p.content|linebreaks|truncatewords:30}}
-		{% endautoescape %}
-		<div class="clear"></div>
-		<h3>Цена от {{p.price}} рублей </h3>
-			
-		<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать далее</a></p>
-		</li>
-	{% endfor %}
+<!--		{% autoescape off %}-->
+<!--		{{p.content|linebreaks|truncatewords:30}}-->
+<!--		{% endautoescape %}-->
+<!--		<div class="clear"></div>-->
+<!--		<h3>Цена от {{p.price}} рублей </h3>-->
+
+<!--		<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать далее</a></p>-->
+<!--		</li>-->
+<!--	{% endfor %}-->
 </ul>
+
 {% endblock %}

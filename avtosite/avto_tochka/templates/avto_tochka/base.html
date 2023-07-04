@@ -1,4 +1,6 @@
 {% load static %}
+{% load avto_tochka_tags %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -30,7 +32,9 @@
 
 <table class="table-content" border=0 cellpadding="0" cellspacing="0">
 <tr>
+
 <!-- Sidebar слева -->
+
 	<td valign="top" class="left-chapters">
 	<ul id="leftchapters">
 
@@ -42,14 +46,18 @@
 				<li><a href="{% url 'main' %}">Все категории</a></li>
 		{% endif %}
 
+		<!--	tag из templatetags/avto_tochka_tags.py 	-->
+		{% getcats_tag as categories %}
+<!--		{% for c in categories %}-->
+<!--			{% if c.pk == cat_selected %}-->
+<!--				<li class="selected">{{c.name}}</li>-->
+<!--			{% else %}-->
+<!--				<li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>-->
+<!--			{% endif %}-->
+<!--		{% endfor %}-->
 
-		{% for c in cats %}
-			{% if c.pk == cat_selected %}
-				<li class="selected">{{c.name}}</li>
-			{% else %}
-				<li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
-			{% endif %}
-		{% endfor %}
+		<!--	tag из templatetags/avto_tochka_tags.py 	-->
+		{% show_categories 'name' cat_selected %}
 
 		<li class="share">
 		<p>Наш канал</p>
@@ -75,7 +83,7 @@
 <!-- Footer -->
 <tr><td valign=top>
 	<div id="footer">
-		<p>&copy; Наш адрес: Театральная 228 Ход с улицы прямо за остановкой </p>
+		<p><h4>  &copy;  Наш адрес: Город Благовещенск ул. Театральная 228 Ход с улицы прямо за остановкой ЦЭС. Тел. 8-924-841-21-40</h4></p>
 	</div>
 </td></tr></table>
 <!-- Конец footer'а и страницы -->
