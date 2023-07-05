@@ -4,6 +4,7 @@ from django.urls import reverse
 
 class Service(models.Model):
     title = models.CharField(max_length=255, verbose_name='Заголовок')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     price = models.SmallIntegerField(default=0, verbose_name='Цена')
     content = models.TextField(blank=False, verbose_name='Описание')  # Пустое = False
     # Нужно установить pillow
@@ -19,13 +20,13 @@ class Service(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
     is_published = models.BooleanField(default=True, verbose_name='Обпуликовать')
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name='Категория')  # (cat)_id автоматом добавится
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория')  # (cat)_id автоматом добавится
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'post_id': self.pk})
+        return reverse('post', kwargs={'post_slug': self.slug})
 
     class Meta:
         verbose_name = 'Услуги'
@@ -40,6 +41,7 @@ class Service(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name='Категории услуг')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
     def __str__(self):
         return self.name

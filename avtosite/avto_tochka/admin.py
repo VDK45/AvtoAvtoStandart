@@ -9,12 +9,14 @@ class ServiceAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     list_editable = ('is_published',)  # Редактруемое поле
     list_filter = ('is_published', 'time_create')
+    prepopulated_fields = {"slug": ('title',)}  # Повторяет поле tiltle
 
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
     search_fields = ('name',)  # Запятая обязательная
+    prepopulated_fields = {"slug": ('name',)}  # Повторяет поле name
 
 
 admin.site.register(Service, ServiceAdmin)
