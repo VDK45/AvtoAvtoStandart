@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+
+from .forms import *
 from .models import *
 
 menu = [{'title': "О сайте", 'url_name': 'about'},
@@ -42,7 +44,19 @@ def services(request, serviceslug):
 
 
 def addpage(request):
-    return HttpResponse("Добавление статьи")
+    if request.method == 'POST':
+        form = AddServiceForm(request.POST)
+        if form.is_valid():
+            # add to database:
+            try:
+                Service.objects.create(**form.cleaned_data)
+                return redirect('main')
+            except:
+                form.add_error(None, 'Ошибка добавления поста')
+    else:
+        form = AddServiceForm()
+
+    return render(request, 'avto_tochka/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление услуги'})
 
 
 def contact(request):
