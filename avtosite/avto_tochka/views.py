@@ -45,11 +45,12 @@ def services(request, serviceslug):
 
 def addpage(request):
     if request.method == 'POST':
-        form = AddServiceForm(request.POST)
+        form = AddServiceForm(request.POST, request.FILES)
         if form.is_valid():
             # add to database:
             try:
-                Service.objects.create(**form.cleaned_data)
+                # Service.objects.create(**form.cleaned_data)  # Форма не связана с БД
+                form.save()  # Форма связана с БД
                 return redirect('main')
             except:
                 form.add_error(None, 'Ошибка добавления поста')
