@@ -25,8 +25,8 @@ def show_categories(sort=None, cat_selected=0):
 @register.inclusion_tag('avto_tochka/list_services.html')
 def show_services(cat_selected):
     if cat_selected == 0:
-        services = Service.objects.all()
+        services = Service.objects.filter(is_published=True)
     else:
-        services = Service.objects.filter(cat=cat_selected)
+        services = Service.objects.filter(cat=cat_selected, is_published=True)
 
     return {"services": services, "cat_selected": cat_selected}
