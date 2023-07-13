@@ -122,11 +122,11 @@ class ShowService(DetailView):
     template_name = 'avto_tochka/service.html'
     slug_url_kwarg = 'service_slug'
     # pk_url_kwarg = 'service_pk'
-    context_object_name = 'post'
+    context_object_name = 'service'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = context['post']
+        context['title'] = context['service']
         context['menu'] = menu
         return context
 

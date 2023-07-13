@@ -1,12 +1,12 @@
 {% extends 'avto_tochka/base.html' %}
 
 {% block content %}
-<h1>{{post.title}}</h1>
+<h1>{{service.title}}</h1>
 
-{% if post.photo %}
-<p><img class="img-article-left" src="{{post.photo.url}}"></p>
+{% if service.photo %}
+<p><img class="img-article-left" src="{{service.photo.url}}"></p>
 {% endif %}
-<h3>Цена от {{post.price}} рублей </h3>
+<h3>Цена от {{service.price}} рублей </h3>
 
-{{post.content|linebreaks}}
+{{service.content|linebreaks}}
 {% endblock %}

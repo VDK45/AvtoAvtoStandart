@@ -15,7 +15,7 @@ urlpatterns = [
     path('login/', login, name='login'),
     # path('post/<int:post_id>/', show_post, name='post'),
     # path('post/<slug:post_slug>/', show_post, name='post'),
-    path('post/<slug:service_slug>/', ShowService.as_view(), name='post'),
+    path('usluga/<slug:service_slug>/', ShowService.as_view(), name='service'),
     # path('category/<int:cat_id>/', show_category, name='category'),
     path('category/<slug:cat_slug>/', ServiceCategory.as_view(), name='category'),
 

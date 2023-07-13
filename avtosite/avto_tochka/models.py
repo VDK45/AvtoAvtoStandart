@@ -26,7 +26,7 @@ class Service(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'service_slug': self.slug})
+        return reverse('service', kwargs={'service_slug': self.slug})
 
     class Meta:
         verbose_name = 'Услуги'
@@ -52,7 +52,19 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категории услуг'
         verbose_name_plural = 'Категории услуг'
-
+'''
+    Для поиска:
+    test in terminal:
+    python manage.py shell
+    from avto_tochka.models import *
+    Service.objects.filter(content__icontains='авто', title__icontains='авто')  # И
+    # sqlite не работает с учетом регистр
+    from django.db.models import Q
+    Service.objects.filter(Q(content__icontains='авто') | Q(title__icontains='авто'))  # или
+    Service.objects.filter(Q(content__icontains='авто') & Q(title__icontains='авто'))  # И
+    Service.objects.filter(~Q(content__icontains='авто') | Q(title__icontains='авто'))  # не включай "авто" или включай "авто"
+    
+'''
 
 """
     Запись в базу данных:
