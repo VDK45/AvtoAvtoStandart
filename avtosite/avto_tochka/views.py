@@ -2,14 +2,10 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import *
 from .models import *
-
-menu = [{'title': "О сайте", 'url_name': 'about'},
-        {'title': "Добавить услугу", 'url_name': 'add_page'},
-        {'title': "Обратная связь", 'url_name': 'contact'},
-        {'title': "Войти", 'url_name': 'login'}
-]
+from .utils import *
 
 
 # класс ServiceHome взамен
@@ -27,17 +23,19 @@ menu = [{'title': "О сайте", 'url_name': 'about'},
 #     return render(request, 'avto_tochka/home.html', context=context)
 
 
-class ServiceHome(ListView):
+class ServiceHome(DataMixin, ListView):
     model = Service
     template_name = 'avto_tochka/home.html'
     context_object_name = 'posts'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Главная страница'
-        context['cat_selected'] = 0
-        return context
+        # context['menu'] = menu
+        # context['title'] = 'Главная страница'
+        # context['cat_selected'] = 0
+        # return context
+        c_def = self.get_user_context(title="Главная страница")
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return Service.objects.filter(is_published=True)
@@ -45,6 +43,7 @@ class ServiceHome(ListView):
 
 def about(request):
     return render(request, 'avto_tochka/about.html', {'title': 'О сайте', 'menu': menu})
+
 
 #
 # def index(request, indexid):
@@ -57,8 +56,8 @@ def about(request):
 #     return HttpResponse(f"Страница index Автоточка.{indexid}")
 
 
-def services(request, serviceslug):
-    return HttpResponse(f"<h1>Услуги</h1><p>{serviceslug}</p>")
+# def services(request, serviceslug):
+#     return HttpResponse(f"<h1>Услуги</h1><p>{serviceslug}</p>")
 
 
 # def addpage(request):
@@ -78,17 +77,22 @@ def services(request, serviceslug):
 #     return render(request, 'avto_tochka/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление услуги'})
 
 
-class AddPage(CreateView):
+class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     model = Service
     fields = ["title", "slug", "price", "content", "photo", "is_published", "cat"]
     template_name = 'avto_tochka/addpage.html'
+    success_url = reverse_lazy('main')
+    login_url = reverse_lazy('login')
+
     # success_url = reverse_lazy('main')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Добавление статьи'
-        context['menu'] = menu
-        return context
+        # context['title'] = 'Добавление статьи'
+        # context['menu'] = menu
+        # return context
+        c_def = self.get_user_context(title="Добавление Услуги")
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 def contact(request):
@@ -117,7 +121,7 @@ def pageNotFound(request, exception):
 #     return render(request, 'avto_tochka/service.html', context=context)
 
 
-class ShowService(DetailView):
+class ShowService(DataMixin, DetailView):
     model = Service
     template_name = 'avto_tochka/service.html'
     slug_url_kwarg = 'service_slug'
@@ -126,9 +130,11 @@ class ShowService(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = context['service']
-        context['menu'] = menu
-        return context
+        # context['title'] = context['service']
+        # context['menu'] = menu
+        # return context
+        c_def = self.get_user_context(title=context['service'])
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 def pageredirect(request, exception):
@@ -152,7 +158,7 @@ def pageredirect(request, exception):
 #     return render(request, 'avto_tochka/home.html', context=context)
 
 
-class ServiceCategory(ListView):
+class ServiceCategory(DataMixin, ListView):
     model = Service
     template_name = 'avto_tochka/home.html'
     context_object_name = 'posts'
@@ -163,7 +169,10 @@ class ServiceCategory(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Категория - ' + str(context['posts'][0].cat)
-        context['menu'] = menu
-        context['cat_selected'] = context['posts'][0].cat_id
-        return context
+        # context['title'] = 'Категория - ' + str(context['posts'][0].cat)
+        # context['menu'] = menu
+        # context['cat_selected'] = context['posts'][0].cat_id
+        # return context
+        c_def = self.get_user_context(title='Категория - ' + str(context['posts'][0].cat),
+                                      cat_selected=context['posts'][0].cat_id)
+        return dict(list(context.items()) + list(c_def.items()))

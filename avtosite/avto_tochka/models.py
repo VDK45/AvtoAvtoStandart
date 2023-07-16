@@ -31,7 +31,7 @@ class Service(models.Model):
     class Meta:
         verbose_name = 'Услуги'
         verbose_name_plural = 'Услуги'
-        ordering = ['time_create', 'title']
+        ordering = ['id']
 
 
 # in terminal: python manage.py makemigrations
@@ -64,6 +64,8 @@ class Category(models.Model):
     Service.objects.filter(Q(content__icontains='авто') & Q(title__icontains='авто'))  # И
     Service.objects.filter(~Q(content__icontains='авто') | Q(title__icontains='авто'))  # не включай "авто" или включай "авто"
     
+    выбирать только необходимые поля:
+    Service.objects.values('title', 'cat__name').get(pk=1)
 '''
 
 """
