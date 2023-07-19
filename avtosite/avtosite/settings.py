@@ -122,3 +122,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Database require (models.ImageField)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Папка хранения
 MEDIA_URL = '/media/'  # /media/название файла
+
+# LOGIN_REDIRECT_URL = '/'
