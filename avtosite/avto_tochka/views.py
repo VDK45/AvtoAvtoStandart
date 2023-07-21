@@ -89,7 +89,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
         # context['title'] = 'Добавление статьи'
         # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title="Добавление Услуги")
+        c_def = self.get_user_context(title="Добавление Услуги", cat_selected="О нас")
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -98,10 +98,10 @@ class About(DataMixin, TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['title'] = 'Добавление статьи'
+        # context['title'] = 'О нас'
         # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title="О нас")
+        c_def = self.get_user_context(title="О нас", cat_selected="О нас")
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -113,7 +113,7 @@ class Contact(DataMixin, TemplateView):
         # context['title'] = 'Добавление статьи'
         # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title="Обратная связь")
+        c_def = self.get_user_context(title="Обратная связь", cat_selected="О нас")
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -159,7 +159,7 @@ class ShowService(DataMixin, DetailView):
         # context['title'] = context['service']
         # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title=context['service'])
+        c_def = self.get_user_context(title=context['service'], cat_selected="О нас")
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -212,7 +212,7 @@ class RegisterUser(DataMixin, CreateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Регистрация")
+        c_def = self.get_user_context(title="Регистрация", cat_selected="О нас")
         return dict(list(context.items()) + list(c_def.items()))
 
     def form_valid(self, form):
@@ -227,7 +227,7 @@ class LoginUser(DataMixin, LoginView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Авторизация")
+        c_def = self.get_user_context(title="Авторизация", cat_selected="О нас")
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_success_url(self):
