@@ -27,7 +27,11 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:  # import from avtosite
-    # import from django.conf.urls.static.static()
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  
+    import debug_toolbar
+
+    urlpatterns = [
+                      path('__debug__/', include(debug_toolbar.urls)),
+                  ] + urlpatterns
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = pageNotFound  # DEBUG = False

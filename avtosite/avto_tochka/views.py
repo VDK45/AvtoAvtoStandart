@@ -3,14 +3,14 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views import View
+from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import *
 from .models import *
 from .utils import *
 
 
-# класс ServiceHome взамен
 # def home(request):
 #     # posts = Service.objects.all()
 #     # cats = Category.objects.all()
@@ -40,11 +40,7 @@ class ServiceHome(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Service.objects.filter(is_published=True)
-
-
-def about(request):
-    return render(request, 'avto_tochka/about.html', {'title': 'О сайте', 'menu': menu})
+        return Service.objects.filter(is_published=True).select_related('cat')
 
 
 #
@@ -97,8 +93,36 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-def contact(request):
-    return HttpResponse("Обратная связь")
+class About(DataMixin, TemplateView):
+    template_name = 'avto_tochka/about.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['title'] = 'Добавление статьи'
+        # context['menu'] = menu
+        # return context
+        c_def = self.get_user_context(title="О нас")
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class Contact(DataMixin, TemplateView):
+    template_name = 'avto_tochka/contact.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['title'] = 'Добавление статьи'
+        # context['menu'] = menu
+        # return context
+        c_def = self.get_user_context(title="Обратная связь")
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+# def about(request):
+#     return render(request, 'avto_tochka/about.html', {'title': 'О сайте', 'menu': menu})
+#
+#
+# def contact(request):
+#     return HttpResponse("Обратная связь")
 
 
 # def login(request):
@@ -167,7 +191,7 @@ class ServiceCategory(DataMixin, ListView):
     allow_empty = False
 
     def get_queryset(self):
-        return Service.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
+        return Service.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -175,8 +199,9 @@ class ServiceCategory(DataMixin, ListView):
         # context['menu'] = menu
         # context['cat_selected'] = context['posts'][0].cat_id
         # return context
-        c_def = self.get_user_context(title='Категория - ' + str(context['posts'][0].cat),
-                                      cat_selected=context['posts'][0].cat_id)
+        c = Category.objects.get(slug=self.kwargs['cat_slug'])
+        c_def = self.get_user_context(title='Категория - ' + str(c.name),
+                                      cat_selected=c.pk)
         return dict(list(context.items()) + list(c_def.items()))
 
 
