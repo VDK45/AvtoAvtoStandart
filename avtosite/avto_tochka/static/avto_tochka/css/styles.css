@@ -428,3 +428,13 @@ ul.lang-list li a:hover {color: #fdc073;}
 .list-pages .page-num-selected:hover {
 	box-shadow: none; 
 }
+.phone {
+	color: #000;
+	font-size: 16px;
+	font-weight: 900;
+}
+.phone a {
+	color: #000;
+	font-size: 16px;
+	font-weight: 900;
+}
