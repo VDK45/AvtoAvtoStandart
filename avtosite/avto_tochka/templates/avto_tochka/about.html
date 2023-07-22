@@ -1,5 +1,5 @@
 {% extends 'avto_tochka/base.html' %}
-
+{% load static %}
 
 {% block content %}
 <h1>{{title}}</h1>
@@ -20,38 +20,38 @@
     <tbody>
         <tr>
             <td align="center">Понедельник</td>
-            <td align="center">9,00</td>
-            <td align="center">18,00</td>
+            <td align="center">9.00</td>
+            <td align="center">18.00</td>
         </tr>
         <tr>
             <td align="center">Вторник</td>
-            <td align="center">9,00</td>
-            <td align="center">18,00</td>
+            <td align="center">9.00</td>
+            <td align="center">18.00</td>
         </tr>
         <tr>
             <td align="center">Среда</td>
-            <td align="center">9,00</td>
-            <td align="center">18,00</td>
+            <td align="center">9.00</td>
+            <td align="center">18.00</td>
         </tr>
         <tr>
             <td align="center">Четверг</td>
-            <td align="center">9,00</td>
-            <td align="center">18,00</td>
+            <td align="center">9.00</td>
+            <td align="center">18.00</td>
         </tr>
         <tr>
             <td align="center">Пятница</td>
-            <td align="center">9,00</td>
-            <td align="center">18,00</td>
+            <td align="center">9.00</td>
+            <td align="center">18.00</td>
         </tr>
         <tr>
             <td align="center">Субота</td>
-            <td align="center">9,00</td>
-            <td align="center">18,00</td>
+            <td align="center">9.00</td>
+            <td align="center">18.00</td>
         </tr>
         <tr>
             <td align="center">Воскресение</td>
-            <td align="center">9,00</td>
-            <td align="center">18,00</td>
+            <td align="center">9.00</td>
+            <td align="center">18.00</td>
         </tr>
     </tbody>
 <!--    <tfoot></tfoot>-->
@@ -63,4 +63,9 @@
 
     <p><script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A09e11344b134ef0675594174379f4dc8b6c355f3503a710c9f6d7909b267b206&amp;width=667&amp;height=521&amp;lang=ru_RU&amp;scroll=true"></script>
 </div>
+<div>
+    <img  src="{% static 'avto_tochka/images/avto_standart.jpg' %}" alt="Нет картинки">
+    <img  src="{% static 'avto_tochka/images/avto_standart_2.jpg' %}" alt="Нет картинки">
+</div>
 {% endblock %}
+
