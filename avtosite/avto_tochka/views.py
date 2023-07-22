@@ -1,5 +1,6 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -43,7 +44,22 @@ class ServiceHome(DataMixin, ListView):
         return Service.objects.filter(is_published=True).select_related('cat')
 
 
-#
+class Search(DataMixin, ListView):
+    model = Service
+    template_name = 'avto_tochka/home.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        # return Service.objects.filter(title__icontains=self.request.GET.get('q'))
+        return Service.objects.filter(Q(content__icontains=self.request.GET.get('q')))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q')
+        c_def = self.get_user_context(title="Результат поиска", cat_selected=None)
+        return dict(list(context.items()) + list(c_def.items()))
+
+
 # def index(request, indexid):
 #     if request.GET:  # Дополнительный GET запрос ?name=VDK&year=45
 #         print(request.GET)  # http://127.0.0.1:8000/index/99/?name=VDK&year=45
@@ -89,7 +105,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
         # context['title'] = 'Добавление статьи'
         # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title="Добавление Услуги", cat_selected="О нас")
+        c_def = self.get_user_context(title="Добавление Услуги", cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -101,7 +117,7 @@ class About(DataMixin, TemplateView):
         # context['title'] = 'О нас'
         # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title="О нас", cat_selected="О нас")
+        c_def = self.get_user_context(title="О нас", cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -113,7 +129,7 @@ class Contact(DataMixin, TemplateView):
         # context['title'] = 'Добавление статьи'
         # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title="Обратная связь", cat_selected="О нас")
+        c_def = self.get_user_context(title="Обратная связь", cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -159,7 +175,7 @@ class ShowService(DataMixin, DetailView):
         # context['title'] = context['service']
         # context['menu'] = menu
         # return context
-        c_def = self.get_user_context(title=context['service'], cat_selected="О нас")
+        c_def = self.get_user_context(title=context['service'], cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -212,7 +228,7 @@ class RegisterUser(DataMixin, CreateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Регистрация", cat_selected="О нас")
+        c_def = self.get_user_context(title="Регистрация", cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
 
     def form_valid(self, form):
@@ -227,7 +243,7 @@ class LoginUser(DataMixin, LoginView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Авторизация", cat_selected="О нас")
+        c_def = self.get_user_context(title="Авторизация", cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_success_url(self):

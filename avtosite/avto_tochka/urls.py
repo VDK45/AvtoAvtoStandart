@@ -22,7 +22,7 @@ urlpatterns = [
     path('usluga/<slug:service_slug>/', ShowService.as_view(), name='service'),
     # path('category/<int:cat_id>/', show_category, name='category'),
     path('category/<slug:cat_slug>/', ServiceCategory.as_view(), name='category'),
-
+    path('search/', Search.as_view(), name='search'),
 ]
 
 
