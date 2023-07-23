@@ -3,8 +3,8 @@ from django.db.models import Count
 from .models import *
 
 menu = [{'title': "О нас", 'url_name': 'about'},
-        {'title': "Добавить услугу", 'url_name': 'add_page'},
         {'title': "Обратная связь", 'url_name': 'contact'},
+        {'title': "Добавить услугу", 'url_name': 'add_page'},
         ]
 
 
@@ -16,8 +16,8 @@ class DataMixin:
         cats = Category.objects.annotate(Count('service'))
 
         user_menu = menu.copy()
-        if not self.request.user.is_authenticated:
-            user_menu.pop(1)
+        if not self.request.user.is_superuser:
+            user_menu.pop(2)
 
         context['menu'] = user_menu
 

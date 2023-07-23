@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
@@ -149,3 +150,20 @@ class Category(models.Model):
     sd = Service.objects.filter(pk__gte=3)
     sd.delete()
 """
+
+
+class Comments(models.Model):
+    """ Коммнетарии """
+    class Meta():
+        db_table = "comments"
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор комментария')
+    post = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name='Комментарий к услуге',
+                             related_name='comments_service')
+    text = models.TextField("Текс комментария", max_length=500)
+    created = models.DateTimeField("Добавлен", auto_now_add=True)
+    status = models.BooleanField(default=False, verbose_name='Разрещение на публикацию')
+
+

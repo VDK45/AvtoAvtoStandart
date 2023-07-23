@@ -21,6 +21,7 @@
 {% block mainmenu %}
 
 		<div class="header">
+
 			<ul id="mainmenu" class="mainmenu">
 			<li class="logo"><a href="{% url 'main' %}"><div class="logo"></div></a></li>
 
@@ -35,11 +36,13 @@
 			<li class="last"><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a></li>
 			{% endif %}
 			<li>
+
 			<form action="{% url 'search' %}" method="get">
 				<input type="search" type="text" name="q" placeholder="Поиск">
 				<button type="submit">Найти</button>
 			</form>
 			</li>
+
 			</ul>
 			<div class="clear"></div>
 

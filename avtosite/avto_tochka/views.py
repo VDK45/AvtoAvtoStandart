@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import *
@@ -27,16 +28,13 @@ from .utils import *
 
 
 class ServiceHome(DataMixin, ListView):
+    """  Главная страница  """
     model = Service
     template_name = 'avto_tochka/home.html'
     context_object_name = 'posts'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['menu'] = menu
-        # context['title'] = 'Главная страница'
-        # context['cat_selected'] = 0
-        # return context
         c_def = self.get_user_context(title="Главная страница")
         return dict(list(context.items()) + list(c_def.items()))
 
@@ -45,13 +43,14 @@ class ServiceHome(DataMixin, ListView):
 
 
 class Search(DataMixin, ListView):
+    """  Страница поиска """
     model = Service
     template_name = 'avto_tochka/home.html'
     context_object_name = 'posts'
 
     def get_queryset(self):
-        # return Service.objects.filter(title__icontains=self.request.GET.get('q'))
-        return Service.objects.filter(Q(content__icontains=self.request.GET.get('q')))
+        return Service.objects.filter(Q(content__icontains=self.request.GET.get('q'))
+                                      | Q(title__icontains=self.request.GET.get('q'))).select_related('cat')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -92,6 +91,7 @@ class Search(DataMixin, ListView):
 
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
+    """  Страница добавления услуги  """
     model = Service
     fields = ["title", "slug", "price", "content", "photo", "is_published", "cat"]
     template_name = 'avto_tochka/addpage.html'
@@ -110,6 +110,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
 
 
 class About(DataMixin, TemplateView):
+    """  Страница о нас  """
     template_name = 'avto_tochka/about.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -122,6 +123,7 @@ class About(DataMixin, TemplateView):
 
 
 class Contact(DataMixin, TemplateView):
+    """  Страница обратная связь  """
     template_name = 'avto_tochka/contact.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -133,37 +135,13 @@ class Contact(DataMixin, TemplateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-# def about(request):
-#     return render(request, 'avto_tochka/about.html', {'title': 'О сайте', 'menu': menu})
-#
-#
-# def contact(request):
-#     return HttpResponse("Обратная связь")
-
-
-# def login(request):
-#     return HttpResponse("Авторизация")
-
-
 def pageNotFound(request, exception):
+    """  Страница не найдена  """
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
 
-# def show_post(request, post_id):
-#     return HttpResponse(f"Отображение статьи с id = {post_id}")
-# def show_post(request, post_slug):
-#     post = get_object_or_404(Service, slug=post_slug)
-#
-#     context = {
-#         'post': post,
-#         'menu': menu,
-#         'title': post.title,
-#         'cat_selected': post.cat_id,
-#     }
-#     return render(request, 'avto_tochka/service.html', context=context)
-
-
-class ShowService(DataMixin, DetailView):
+class ShowService(FormMixin, DataMixin, DetailView):
+    """  Страница одной услуги  """
     model = Service
     template_name = 'avto_tochka/service.html'
     slug_url_kwarg = 'service_slug'
@@ -180,10 +158,12 @@ class ShowService(DataMixin, DetailView):
 
 
 def pageredirect(request, exception):
+    """  Страница перемещена  """
     return redirect(f"<h1>Страница перемещена на другой постоянный URL адрес</h1>")
 
 
 # def show_category(request, cat_id):
+#    """  Страница одной категории  """
 #     # posts = Service.objects.filter(cat_id=cat_id)
 #     # cats = Category.objects.all()
 #
@@ -201,6 +181,7 @@ def pageredirect(request, exception):
 
 
 class ServiceCategory(DataMixin, ListView):
+    """  Страница одной категории  """
     model = Service
     template_name = 'avto_tochka/home.html'
     context_object_name = 'posts'
@@ -222,6 +203,7 @@ class ServiceCategory(DataMixin, ListView):
 
 
 class RegisterUser(DataMixin, CreateView):
+    """  Страница регистрации  """
     form_class = RegisterUserForm
     template_name = 'avto_tochka/register.html'
     success_url = reverse_lazy('login')
@@ -238,6 +220,7 @@ class RegisterUser(DataMixin, CreateView):
 
 
 class LoginUser(DataMixin, LoginView):
+    """  Страница входа  """
     form_class = LoginUserForm
     template_name = 'avto_tochka/login.html'
 
@@ -251,6 +234,7 @@ class LoginUser(DataMixin, LoginView):
 
 
 def logout_user(request):
+    """  Страница выхода  """
     logout(request)
     return redirect('main')
 
