@@ -154,7 +154,7 @@ class Category(models.Model):
 
 class Comments(models.Model):
     """ Коммнетарии """
-    class Meta():
+    class Meta:
         db_table = "comments"
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
@@ -162,7 +162,7 @@ class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор комментария')
     post = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name='Комментарий к услуге',
                              related_name='comments_service')
-    text = models.TextField("Текс комментария", max_length=500)
+    text = models.TextField(verbose_name='Текст комментария', max_length=2500)
     created = models.DateTimeField("Добавлен", auto_now_add=True)
     status = models.BooleanField(default=False, verbose_name='Разрещение на публикацию')
 

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.db.models import Q
@@ -147,6 +148,8 @@ class ShowService(FormMixin, DataMixin, DetailView):
     slug_url_kwarg = 'service_slug'
     # pk_url_kwarg = 'service_pk'
     context_object_name = 'service'
+    form_class = CommentForm
+    # success_msg = 'Комментарий успешно создан, ожидайте модерации'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -155,6 +158,23 @@ class ShowService(FormMixin, DataMixin, DetailView):
         # return context
         c_def = self.get_user_context(title=context['service'], cat_selected=None)
         return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('service', kwargs={'service_slug': self.get_object().slug})
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.post = self.get_object()
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 
 def pageredirect(request, exception):

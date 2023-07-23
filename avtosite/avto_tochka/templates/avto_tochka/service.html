@@ -9,4 +9,43 @@
 <h3>Цена от {{service.price}} рублей </h3>
 
 {{service.content|linebreaks}}
+
+<hr>
+<p>Комментарии:</p>
+<!--{{service.comments_service.all}}-->
+<ul>
+{% for item in service.comments_service.all %}
+    <li>
+        Добавлено: {{ item.created }} <br>
+        Пользователь: {{ item.user }} <br>
+        Комментировал: {{ item.text }} <br>
+    </li>
+{% endfor %}
+</ul>
+<hr>
+<p>Добавить комментарий</p>
+
+<!--{% if messages %}-->
+<!--<div class="alert.alert-success">-->
+<!--    {% for m in messages %}-->
+<!--    {{ m }}-->
+<!--    {% endfor %}-->
+<!--</div>-->
+<!--{% endif %}-->
+
+{% if request.user.is_authenticated %}
+<div class="col-4" align="left">
+    <form action="" id="add_form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+        <button form="add_form" type="submit" class="btn.btn-primary" align="left"> Добавить комментрарий </button>
+</div>
+{% else %}
+<div>
+    <li class="last">  <a href="{% url 'login' %}">Войдите в свой аккаунт чтобы написать комментарии.</a></li>
+    <li class="last">  <a href="{% url 'register' %}">Или создать свой аккаунт чтобы написать комментарии.</a></li>
+</div>
+{% endif %}
+
 {% endblock %}
