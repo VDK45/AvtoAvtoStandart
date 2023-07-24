@@ -12,16 +12,21 @@
 
 <hr>
 <p>Комментарии:</p>
-<!--{{service.comments_service.all}}-->
 <ul>
 {% for item in service.comments_service.all %}
-    <li>
-        Добавлено: {{ item.created }} <br>
-        Пользователь: {{ item.user }} <br>
-        Комментировал: {{ item.text }} <br>
-    </li>
+        <br>
+        {% if item.status is True %}
+            <li>Добавлено: {{ item.created }} <br></li>
+            <li>Пользователь: {{ item.user }} <br></li>
+            <li>{{ item.text }} <br></li>
+        {% else %}
+            <li>Спасибо {{ item.user }} что оставили комментарий! Комментарий будет добавлен после модераци.</li>
+        {% endif %}
+
 {% endfor %}
 </ul>
+
+
 <hr>
 <p>Добавить комментарий</p>
 

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 
 
@@ -152,6 +153,8 @@ class Category(models.Model):
 """
 
 
+
+
 class Comments(models.Model):
     """ Коммнетарии """
     class Meta:
@@ -165,5 +168,11 @@ class Comments(models.Model):
     text = models.TextField(verbose_name='Текст комментария', max_length=2500)
     created = models.DateTimeField("Добавлен", auto_now_add=True)
     status = models.BooleanField(default=False, verbose_name='Разрещение на публикацию')
+
+
+
+
+
+
 
 

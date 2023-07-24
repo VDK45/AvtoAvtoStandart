@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "debug_toolbar",
+    "captcha",
     'avto_tochka.apps.AvtoTochkaConfig',  # My site
 ]
 
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'avtosite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,3 +131,17 @@ MEDIA_URL = '/media/'  # /media/название файла
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'avtosite_cache'),
+    }
+}
+
+# Captcha
+CAPTCHA_FONT_SIZE = 32
+CAPTCHA_IMAGE_SIZE = (120, 40)
+CAPTCHA_LETTER_ROTATION = (-25, 25)
+CAPTCHA_TIMEOUT = 10
+

@@ -23,6 +23,7 @@ from avtosite import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # http://127.0.0.1:8000/admin
+    path('captcha/', include('captcha.urls')),
     path('', include('avto_tochka.urls')),
 ]
 
