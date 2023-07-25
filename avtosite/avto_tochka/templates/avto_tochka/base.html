@@ -1,4 +1,4 @@
-{% load static %}
+{% load static account socialaccount %}
 
 {% load avto_tochka_tags %}
 
@@ -31,9 +31,11 @@
 
 
 			{% if request.user.is_authenticated %}
-			<li class="last"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+				<li class="last"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
 			{% else %}
-			<li class="last"><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a></li>
+				<li class="last"><a href="{% url 'register' %}">Регистрация</a> |
+					<a href="{% provider_login_url 'google' %}">Войти в Google</a> |
+					<a href="{% url 'login' %}">Войти</a></li>
 			{% endif %}
 
 			<li>

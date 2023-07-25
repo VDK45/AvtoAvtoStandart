@@ -1,3 +1,4 @@
+from allauth.socialaccount.models import SocialApp
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
@@ -36,6 +37,16 @@ class CommentsAdmin(admin.ModelAdmin):
     list_editable = ('status', )
     # list_filter = ('user', 'post')
     save_on_top = True  # Панель управления на верху
+
+
+# django-allauth
+class SocialAppAdmin(admin.ModelAdmin):
+    model = SocialApp
+    menu_icon = 'placeholder'
+    add_to_setting_menu = False
+    exclude_from_explorer = False
+    list_display = ('name', 'provider')
+    save_on_top = True
 
 
 admin.site.register(Service, ServiceAdmin)

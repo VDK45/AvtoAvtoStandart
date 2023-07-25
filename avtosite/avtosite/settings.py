@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "captcha",
     'avto_tochka.apps.AvtoTochkaConfig',  # My site
+    # Django-allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +151,35 @@ CAPTCHA_IMAGE_SIZE = (120, 40)
 CAPTCHA_LETTER_ROTATION = (-25, 25)
 CAPTCHA_TIMEOUT = 10
 
+# Django-allauth
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        "APP": {
+            "client_id": "929601427814-12crc7a17cqolqtaslh5eg1cfk5neaif.apps.googleusercontent.com",
+            "secret": "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",
+            "key": ""
+        },
+        # These are provider-specific settings that can only be
+        # listed here:
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        }
+    }
+}

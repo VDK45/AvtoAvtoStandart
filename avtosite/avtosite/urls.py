@@ -25,6 +25,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # http://127.0.0.1:8000/admin
     path('captcha/', include('captcha.urls')),
     path('', include('avto_tochka.urls')),
+
+    # django-allauth
+    path('accounts/', include('allauth.urls')),  # Django-allauth
 ]
 
 if settings.DEBUG:  # import from avtosite
