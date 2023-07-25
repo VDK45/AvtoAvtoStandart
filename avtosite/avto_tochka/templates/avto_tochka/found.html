@@ -1,0 +1,34 @@
+{% extends 'avto_tochka/base.html' %}
+<!--{% load avto_tochka_tags %}-->
+
+{% block content %}
+
+    <h1 align="center">Авто стандарт </h1>
+    <h4 align="center">Результат поиска: </h4>
+<hr>
+
+<ul class="list-articles">
+
+    {% for p in posts %}
+    <li>
+        <div class="article-panel">
+        <p class="first">Категория: {{p.cat}}</p>
+        <p class="last">Обновлено: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
+        </div>
+
+        {% if p.photo %}
+            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+        {% endif %}
+
+        <h2>{{p.title}}</h2>
+        <p>Цена от {{p.price}} рублей </p>
+        {% autoescape on %}
+        {{p.content|linebreaks|truncatewords:50}}
+        {% endautoescape %}
+        <div class="clear"></div>
+        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать далее</a></p>
+    </li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

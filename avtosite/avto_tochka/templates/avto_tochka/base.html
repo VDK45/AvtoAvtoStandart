@@ -20,7 +20,9 @@
 
 {% block mainmenu %}
 
+
 		<div class="header">
+
 
 			<ul id="mainmenu" class="mainmenu">
 			<li class="logo"><a href="{% url 'main' %}"><div class="logo"></div></a></li>
@@ -31,14 +33,14 @@
 
 
 			{% if request.user.is_authenticated %}
-				<li class="last"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+				<li class="last">Пользователь {{user.username}} | <a  href="{% url 'logout' %}">Выйти</a></li>
 			{% else %}
 				<li class="last"><a href="{% url 'register' %}">Регистрация</a> |
 					<a href="{% provider_login_url 'google' %}">Войти в Google</a> |
 					<a href="{% url 'login' %}">Войти</a></li>
 			{% endif %}
 
-			<li>
+			<li class="mainmenu">
 			<form action="{% url 'search' %}" method="get">
 				<input type="search" type="text" name="q" placeholder="Поиск">
 				<button type="submit">Найти</button>

@@ -46,7 +46,7 @@ class ServiceHome(DataMixin, ListView):
 class Search(DataMixin, ListView):
     """  Страница поиска """
     model = Service
-    template_name = 'avto_tochka/home.html'
+    template_name = 'avto_tochka/found.html'
     context_object_name = 'posts'
 
     def get_queryset(self):

@@ -31,8 +31,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class CommentsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'post', 'created', 'status')
-    list_display_links = ('user', 'post')
+    list_display = ('user', 'post', 'text', 'created', 'status')
+    list_display_links = ('user', 'post', 'created')
     search_fields = ('text', )
     list_editable = ('status', )
     # list_filter = ('user', 'post')
