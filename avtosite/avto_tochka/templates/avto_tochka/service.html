@@ -1,4 +1,5 @@
 {% extends 'avto_tochka/base.html' %}
+{% load static account socialaccount %}
 
 {% block content %}
 <h1>{{service.title}}</h1>
@@ -48,6 +49,7 @@
 </div>
 {% else %}
 <div>
+    <li class="last">  <a href="{% provider_login_url 'google' %}">Войдите в свой Google аккаунт чтобы написать комментарии.</a></li>
     <li class="last">  <a href="{% url 'login' %}">Войдите в свой аккаунт чтобы написать комментарии.</a></li>
     <li class="last">  <a href="{% url 'register' %}">Или создать свой аккаунт чтобы написать комментарии.</a></li>
 </div>

@@ -260,7 +260,7 @@ def logout_user(request):
 
 
 class Profile(DataMixin, ListView):
-    """  Главная страница  """
+    """  Войти в Гугл акаунт страница  """
     model = Service
     template_name = 'avto_tochka/profile.html'
     context_object_name = 'posts'
