@@ -12,7 +12,7 @@ class ServiceAdmin(admin.ModelAdmin):
     list_editable = ('is_published',)  # Редактруемое поле
     list_filter = ('is_published', 'time_create')
     prepopulated_fields = {"slug": ('title',)}  # Атоматом создает slug по title
-    fields = ('title', 'slug', 'cat', 'content', 'photo', 'get_html_photo', 'is_published', 'time_create', 'time_update')
+    fields = ('title', 'slug', 'price', 'cat', 'content', 'photo', 'get_html_photo', 'is_published', 'time_create', 'time_update')
     readonly_fields = ('time_create', 'time_update', 'get_html_photo')
     save_on_top = True  # Панель управления на верху
 
