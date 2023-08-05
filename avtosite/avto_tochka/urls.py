@@ -21,7 +21,7 @@ urlpatterns = [
     # path('post/<slug:post_slug>/', show_post, name='post'),
     path('service/<slug:service_slug>/', ShowService.as_view(), name='service'),
     # path('category/<int:cat_id>/', show_category, name='category'),
-    path('category/<slug:cat_slug>/', cache_page(360)(ServiceCategory.as_view()), name='category'),
+    path('category/<slug:cat_slug>/', ServiceCategory.as_view(), name='category'),
     path('search/', Search.as_view(), name='search'),
     path('accounts/profile/', Profile.as_view(), name='profile'),
 ]

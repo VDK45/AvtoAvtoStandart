@@ -4,6 +4,11 @@ from avto_tochka.models import *
 register = template.Library()
 
 
+@register.simple_tag(name='getcat_tag')
+def get_categories(filter):
+        return Category.objects.filter(pk=filter)[0]
+
+
 @register.simple_tag(name='getcats_tag')
 def get_categories(filter=None):
     if not filter:

@@ -1,22 +1,33 @@
+{% extends 'avto_tochka/base.html' %}
+{% load avto_tochka_tags %}
 
-{% for p in services %}
-		<li><div class="article-panel">
-		<p class="first">Категория: {{p.cat}}</p>
-		<p class="last">Обновлено: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
-		</div>
+{% block content %}
+<hr>
+    <h1 align="center">Авто стандарт - Категория: {% getcat_tag filter=cat_selected  %}</h1>
+<hr>
 
-		{% if p.photo %}
-			<p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
-		{% endif %}
+<ul class="list-articles">
 
-		<li><h2>{{p.title}} </h2>
+    {% for p in posts %}
+    <li>
+        <div class="article-panel">
+        <p class="first">Категория: {{p.cat}}</p>
+        <p class="last">Обновлено: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
+        </div>
 
-		{% autoescape off %}
-		{{p.content|linebreaks|truncatewords:30}}
-		{% endautoescape %}
-		<div class="clear"></div>
-		<h3>Цена от {{p.price}} рублей </h3>
+        {% if p.photo %}
+            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+        {% endif %}
 
-		<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать далее</a></p>
-		</li>
-{% endfor %}
+        <h2>{{p.title}}</h2>
+        <p>Цена от {{p.price}} рублей </p>
+        {% autoescape on %}
+        {{p.content|linebreaks|truncatewords:50}}
+        {% endautoescape %}
+        <div class="clear"></div>
+        <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать далее</a></p>
+    </li>
+	{% endfor %}
+</ul>
+
+{% endblock %}
