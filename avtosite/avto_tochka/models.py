@@ -54,6 +54,24 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категории услуг'
         verbose_name_plural = 'Категории услуг'
+
+
+class Brand(models.Model):
+    name = models.CharField(max_length=100, db_index=True, verbose_name='Бренд машины')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name='Фото')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('brand', kwargs={'brand_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Бренд машины'
+        verbose_name_plural = 'Бренды машин'
+
+
 '''
     Для поиска:
     test in terminal:
@@ -151,8 +169,6 @@ class Category(models.Model):
     sd = Service.objects.filter(pk__gte=3)
     sd.delete()
 """
-
-
 
 
 class Comments(models.Model):

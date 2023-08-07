@@ -30,6 +30,13 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ('name',)}  # Повторяет поле name
 
 
+class BrandsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    list_display_links = ('id', 'name')
+    search_fields = ('name',)  # Запятая обязательная
+    prepopulated_fields = {"slug": ('name',)}  # Повторяет поле name
+
+
 class CommentsAdmin(admin.ModelAdmin):
     list_display = ('user', 'post', 'text', 'created', 'status')
     list_display_links = ('user', 'post', 'created')
@@ -52,6 +59,7 @@ class SocialAppAdmin(admin.ModelAdmin):
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Comments, CommentsAdmin)
+admin.site.register(Brand, BrandsAdmin)
 
 admin.site.site_title = 'Админ-панель сайта Авто стандарт'
 admin.site.site_header = 'Админ-панель сайта Авто стандарт'

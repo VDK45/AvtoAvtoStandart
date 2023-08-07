@@ -8,7 +8,7 @@
 
 <html lang="ru">
 <head>
-	<title>{{title}}</title>
+	<title>{{ title }}</title>
 		<link type="text/css" href="{% static 'avto_tochka/css/styles.css' %}" rel="stylesheet" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="shortcut icon" href="{% static 'avto_tochka/images/main.ico' %}" type="image/x-icon"/>
@@ -82,6 +82,8 @@
 				{% endif %}
 			{% endif %}
 		{% endfor %}
+
+		<li><a  href="{% url 'car_brands' %}">Запчасти</a></li>
 
 		<li class="share">
 		<p>Наш канал</p>

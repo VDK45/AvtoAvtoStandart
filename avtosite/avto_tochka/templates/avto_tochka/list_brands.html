@@ -1,0 +1,25 @@
+{% extends 'avto_tochka/base.html' %}
+{% load avto_tochka_tags %}
+
+{% block content %}
+<hr>
+    <h1 align="center">Авто стандарт - Бренды машин: </h1>
+<hr>
+
+<ul class="list-articles">
+
+    {% for p in brands %}
+    <li>
+        <div class="article-panel">
+        <p class="first">Бренд: {{p.name}}</p>
+        </div>
+
+        {% if p.photo %}
+            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+        {% endif %}
+        <div class="clear"></div>
+    </li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

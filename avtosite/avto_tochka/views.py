@@ -141,15 +141,31 @@ def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
 
+class Brands(DataMixin, ListView):
+    """  Страница бренды машин  """
+    model = Brand
+    template_name = 'avto_tochka/list_brands.html'
+    # extra_context = {'title': 'Бренды'}
+    context_object_name = 'brands'
+    allow_empty = False
+
+    def get_queryset(self):
+        return Brand.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Бренды'
+        c_def = self.get_user_context(title=context['title'])
+        return dict(list(context.items()) + list(c_def.items()))
+
+
 class ShowService(FormMixin, DataMixin, DetailView):
     """  Страница одной услуги  """
     model = Service
     template_name = 'avto_tochka/service.html'
     slug_url_kwarg = 'service_slug'
-    # pk_url_kwarg = 'service_pk'
     context_object_name = 'service'
     form_class = CommentForm
-    # success_msg = 'Комментарий успешно создан, ожидайте модерации'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -272,4 +288,6 @@ class Profile(DataMixin, ListView):
 
     def get_queryset(self):
         return Service.objects.filter(is_published=True).select_related('cat')
+
+
 
