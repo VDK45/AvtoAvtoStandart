@@ -3,33 +3,34 @@
 
 {% block content %}
 <hr>
-    <h1 align="center">Авто стандарт - Запчасти для {% getbrand_tag filter=cat_selected  %}  </h1>
+    <h1 align="center">Авто стандарт - Запчасти для {% getbrand_tag filter=brand_selected  %}  </h1>
 <hr>
 
 <ul class="list-articles">
-
     {% for p in products %}
-        <li>
-            <div class="article-panel">
-                <p class="first">Запчасть: {{p.name}} для {{p.brand}}</p>
-                    {% if p.new == False %}
-                    <p class="last">Состояние Б/У</p>
-<!--                    {% else p.new == True %)-->
-<!--                    <p class="last">Состояние новое</p>-->
+            <li>
+                <div class="article-panel">
+                    <p class="first">Запчасть: {{p.name}} для {{p.brand}}</p>
+
+                        {% if p.new == False %}
+                        <p class="last">Состояние Б/У</p>
+    <!--                    {% else p.new == True %)-->
+    <!--                    <p class="last">Состояние новое</p>-->
+                        {% endif %}
+                </div>
+
+                    {% if p.photo %}
+                        <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
                     {% endif %}
-            </div>
 
-                {% if p.photo %}
-                    <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
-                {% endif %}
-
-            <h2>{{p.title}}</h2>
-            <p>Цена от {{p.price}} рублей </p>
-            {% autoescape off %}
-            {{p.content|linebreaks|truncatewords:50}}
-            {% endautoescape %}
-            <div class="clear"></div>
-        </li>
+                <h2>{{p.title}}</h2>
+                <p>Цена от {{p.price}} рублей </p>
+                <p>Количество: {{ p.quantity }} </p>
+                {% autoescape off %}
+                {{p.content|linebreaks|truncatewords:50}}
+                {% endautoescape %}
+                <div class="clear"></div>
+            </li>
 	{% endfor %}
 </ul>
 

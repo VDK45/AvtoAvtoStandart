@@ -78,6 +78,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     content = models.TextField(blank=False, verbose_name='Описание')  # Пустое = True
     price = models.SmallIntegerField(default=0, verbose_name='Цена')
+    quantity = models.SmallIntegerField(default=1, verbose_name='Количество')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     photo = models.ImageField(upload_to="photos/products/%Y/%m/%d/",
                               verbose_name='Фото')
