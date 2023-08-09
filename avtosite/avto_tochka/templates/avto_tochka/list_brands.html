@@ -11,11 +11,12 @@
     {% for p in brands %}
     <li>
         <div class="article-panel">
-        <p class="first">Бренд: {{p.name}}</p>
+
+        <p class="first">Бренд: </p><a href="{{ p.get_absolute_url }}"> {{ p.name }}</a>
         </div>
 
         {% if p.photo %}
-            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+            <p><img class="img-article-left thumb"  src="{{p.photo.url}}"></p>
         {% endif %}
         <div class="clear"></div>
     </li>

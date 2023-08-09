@@ -72,6 +72,31 @@ class Brand(models.Model):
         verbose_name_plural = 'Бренды машин'
 
 
+class Product(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Запчасти')
+    model = models.CharField(max_length=255, verbose_name='Модель', blank=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
+    content = models.TextField(blank=False, verbose_name='Описание')  # Пустое = True
+    price = models.SmallIntegerField(default=0, verbose_name='Цена')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    photo = models.ImageField(upload_to="photos/products/%Y/%m/%d/",
+                              verbose_name='Фото')
+    brand = models.ForeignKey('Brand', on_delete=models.PROTECT,
+                              verbose_name='Бренд')
+    new = models.BooleanField(default=False, verbose_name='Новая запчасть')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('product', kwargs={'product_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Запчасть'
+        verbose_name_plural = 'Запчасти'
+        ordering = ['name']
+
+
 '''
     Для поиска:
     test in terminal:

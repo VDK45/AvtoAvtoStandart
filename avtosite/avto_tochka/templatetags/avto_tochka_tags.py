@@ -9,6 +9,11 @@ def get_categories(filter):
         return Category.objects.filter(pk=filter)[0]
 
 
+@register.simple_tag(name='getbrand_tag')
+def get_brands(filter):
+        return Brand.objects.filter(pk=filter)[0]
+
+
 @register.simple_tag(name='getcats_tag')
 def get_categories(filter=None):
     if not filter:

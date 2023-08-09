@@ -24,7 +24,9 @@ urlpatterns = [
     path('category/<slug:cat_slug>/', ServiceCategory.as_view(), name='category'),
     path('search/', Search.as_view(), name='search'),
     path('accounts/profile/', Profile.as_view(), name='profile'),
-    path('brand/', Brands.as_view(), name='car_brands'),
+    path('brands/', Brands.as_view(), name='car_brands'),
+    path('brand/<slug:brand_slug>/', ProductsBrand.as_view(), name='brand'),
+
 ]
 
 

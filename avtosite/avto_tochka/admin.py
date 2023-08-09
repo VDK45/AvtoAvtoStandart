@@ -37,6 +37,22 @@ class BrandsAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ('name',)}  # Повторяет поле name
 
 
+class ProductsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'brand', 'model', 'price', 'content', 'new')
+    list_display_links = ('id', 'name', 'content')
+    search_fields = ('name', 'content',)  # Запятая обязательная
+    prepopulated_fields = {"slug": ('name',)}  # Повторяет поле name
+    fields = ('name', 'slug', 'content', 'model', 'price', 'photo', 'get_html_photo', 'time_create', 'brand', 'new')
+    readonly_fields = ('time_create', 'get_html_photo')
+    save_on_top = True
+
+    def get_html_photo(self, object):
+        if object.photo:
+            return mark_safe(f"<img src='{object.photo.url}' width=100>")
+
+    get_html_photo.short_description = "Миниатюра"
+
+
 class CommentsAdmin(admin.ModelAdmin):
     list_display = ('user', 'post', 'text', 'created', 'status')
     list_display_links = ('user', 'post', 'created')
@@ -60,6 +76,7 @@ admin.site.register(Service, ServiceAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Comments, CommentsAdmin)
 admin.site.register(Brand, BrandsAdmin)
+admin.site.register(Product, ProductsAdmin)
 
 admin.site.site_title = 'Админ-панель сайта Авто стандарт'
 admin.site.site_header = 'Админ-панель сайта Авто стандарт'

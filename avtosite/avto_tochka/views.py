@@ -159,6 +159,28 @@ class Brands(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
+class ProductsBrand(DataMixin, ListView):
+    """  Страница одного бренда """
+    model = Product
+    template_name = 'avto_tochka/list_products.html'
+    context_object_name = 'products'
+    allow_empty = False
+
+    def get_queryset(self):
+        return Product.objects.filter(brand__slug=self.kwargs['brand_slug']).select_related('brand')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['title'] = 'Категория - ' + str(context['posts'][0].cat)
+        # context['menu'] = menu
+        # context['cat_selected'] = context['posts'][0].cat_id
+        # return context
+        c = Brand.objects.get(slug=self.kwargs['brand_slug'])
+        c_def = self.get_user_context(title='Запчасти для - ' + str(c.name),
+                                      cat_selected=c.pk)
+        return dict(list(context.items()) + list(c_def.items()))
+
+
 class ShowService(FormMixin, DataMixin, DetailView):
     """  Страница одной услуги  """
     model = Service
