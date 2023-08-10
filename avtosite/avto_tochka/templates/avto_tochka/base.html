@@ -31,7 +31,6 @@
 			<li><a href="{% url m.url_name %}">{{m.title}}</a></li>
 			{% endfor %}
 
-
 			{% if request.user.is_authenticated %}
 				<li class="last">Пользователь {{user.username}} | <a  href="{% url 'logout' %}">Выйти</a></li>
 			{% else %}
@@ -40,12 +39,6 @@
 					<a href="{% url 'login' %}">Войти</a></li>
 			{% endif %}
 
-			<li class="mainmenu">
-			<form action="{% url 'search' %}" method="get">
-				<input type="search" type="text" name="q" placeholder="Поиск">
-				<button type="submit">Найти</button>
-			</form>
-			</li>
 
 			</ul>
 			<div class="clear"></div>
@@ -95,6 +88,10 @@
 <td valign="top" class="content">
 	<!-- Хлебные крошки -->
 	{% block breadcrumbs %}
+				<form action="{% url 'search' %}" method="get">
+				<input type="search" type="text" name="q" placeholder="Поиск">
+				<button type="submit">Найти</button>
+				</form>
 	{% endblock %}
 
 <!-- Блок контента -->

@@ -19,9 +19,9 @@
                         {% endif %}
                 </div>
 
-                    {% if p.photo %}
-                        <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
-                    {% endif %}
+                {% if p.photo %}
+                    <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+                {% endif %}
 
                 <p>Цена от {{p.price}} рублей </p>
                 <p>Артикул: {{p.code}} </p>
