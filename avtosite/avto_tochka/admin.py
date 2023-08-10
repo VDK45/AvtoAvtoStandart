@@ -42,7 +42,7 @@ class ProductsAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'name', 'content')
     search_fields = ('name', 'content',)  # Запятая обязательная
     prepopulated_fields = {"slug": ('name',)}  # Повторяет поле name
-    fields = ('name', 'slug', 'content', 'model', 'price', 'photo', 'get_html_photo', 'time_create', 'brand', 'new')
+    fields = ('name', 'slug', 'content', 'model', 'code', 'price', 'photo', 'get_html_photo', 'time_create', 'brand', 'new')
     readonly_fields = ('time_create', 'get_html_photo')
     save_on_top = True
 

@@ -75,6 +75,7 @@ class Brand(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name='Запчасти')
     model = models.CharField(max_length=255, verbose_name='Модель', blank=True)
+    code = models.CharField(max_length=255, verbose_name='Артикул', blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     content = models.TextField(blank=False, verbose_name='Описание')  # Пустое = True
     price = models.SmallIntegerField(default=0, verbose_name='Цена')

@@ -10,7 +10,7 @@
     {% for p in products %}
             <li>
                 <div class="article-panel">
-                    <p class="first">Запчасть: {{p.name}} для {{p.brand}}</p>
+                    <p class="first">Запчасть: {{p.name}} для {{p.brand}} {{p.model}}</p>
 
                         {% if p.new == False %}
                         <p class="last">Состояние Б/У</p>
@@ -23,8 +23,8 @@
                         <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
                     {% endif %}
 
-                <h2>{{p.title}}</h2>
                 <p>Цена от {{p.price}} рублей </p>
+                <p>Артикул: {{p.code}} </p>
                 <p>Количество: {{ p.quantity }} </p>
                 {% autoescape off %}
                 {{p.content|linebreaks|truncatewords:50}}
